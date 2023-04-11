@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+</head>
+<body>
+	<div class="container">
+		<h2 class="mt-2">Employee Directory</h2>
+		<hr>
+		<a th:href="@{/employees/showFormForAdd}" th:text="'Add Employee'" class="btn btn-primary btn-sm mb-3"></a>
+		<form th:action="@{/employees/search}">
+		<div class="row g-3 align-items-center">
+		<div class="col-auto">
+		 <label th:text="'Employee Search : '" class="col-form-label"></label>
+		 </div>
+		 <div class="col-auto">
+		 <input type="text" name="searchName" class="form-control"/>
+		 </div>
+		  <div class="col-auto">
+		 <input type="submit" value="Search" class="btn btn-outline-secondary"/>
+		 </div>
+		 </div>
+		</form>
+		<table class="table mt-4">
+			<thead class="table-dark">
+				<tr>
+					<th scope="col" th:text="Id"/>
+					<th scope="col"><a th:href="@{list(name=1)}">First Name</a></th>
+					<th scope="col"><a th:href="@{list(name=2)}">Last Name</a></th>
+					<th scope="col"><a th:href="@{list(name=3)}">Email</a></th>
+					<th scope="col" th:text="Action" />
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="emp: ${employees}">
+					<td th:text="${emp.id}"></td>
+					<td th:text="${emp.firstName}"></td>
+					<td th:text="${emp.lastName}"></td>
+					<td th:text="${emp.email}"></td>
+					<td><a th:href="@{/employees/update(id=${emp.id})}" th:text="'Update'" class="btn btn-primary btn-sm"></a>|
+					<a th:href="@{/employees/delete(id=${emp.id})}" class="btn btn-danger btn-sm" th:text="'Delete'" 
+					onclick="if (!(confirm('Are you sure you want to delete this employee?')))return false"></a></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>
